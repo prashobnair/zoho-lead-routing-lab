@@ -1,0 +1,7 @@
+{"leads":[
+  {"id":"lead-1","channel":"whatsapp","phone":"+91 90000 00001","consent":true,"intent":"sales","budget_confirmed":true},
+  {"id":"lead-2","channel":"instagram","phone":"+919000000001","consent":true,"intent":"sales","budget_confirmed":true},
+  {"id":"lead-3","channel":"forms","phone":"9000000002","consent":true,"intent":"support"},
+  {"id":"lead-4","channel":"forms","phone":"+919000000003","consent":false,"intent":"sales","budget_confirmed":true},
+  {"id":"lead-5","channel":"whatsapp","phone":"+919000000004","consent":true,"intent":"support"}
+]}
