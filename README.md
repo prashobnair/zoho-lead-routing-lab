@@ -1,28 +1,33 @@
-# Zoho Lead Routing Lab
+# zoho-lead-routing-lab (moved)
 
-A local, **simulation-only** lead intake pipeline. It accepts fictional Forms, WhatsApp and Instagram events, normalizes explicitly international phone numbers, flags duplicate candidates, qualifies a narrow sales case and queues uncertain records for a human. There are no real messages, chatbots, webhooks, Bigin writes or Zoho credentials.
+This project moved to [zoho-implementation-toolkit](https://github.com/prashobnair/zoho-implementation-toolkit) as the `lead_routing` module. Its full commit history was preserved there.
 
-## Why this project
+It routes inbound leads to queues in simulation — qualified, duplicate-candidate, or human review. It never sends anything.
 
-The [Zoho CRM contract board](https://www.upwork.com/freelance-jobs/zoho-crm/) samples WhatsApp/CRM integration work. A more detailed [Bigin/uChat/Pabbly/Meta brief](https://www.upwork.com/freelance-jobs/apply/Automation-ChatBot-Expert-Zoho-Bigin-uChat-Pabbly-Connect-Meta-api_~022094648010652558581/) asks for multichannel lead qualification, E.164 deduplication, qualified/unqualified routing and human handover. This repo tests that decision logic offline; it does not imply a live implementation of those platforms or a client engagement.
-
-## Run it
-
-Python 3.10+ and standard library only. From the repository root:
+## Use it now
 
 ```sh
-python3 cli.py examples.json
-python3 -m unittest discover -p 'test_*.py' -v
+pip install https://github.com/prashobnair/zoho-implementation-toolkit/releases/download/v0.1.0/zohokit-0.1.0-py3-none-any.whl
 ```
 
-No trial account, API key, Docker, webhook endpoint or paid service is needed. The sample is fictional. The five events yield one qualified sales lead, one duplicate candidate and three human-review cases (invalid phone, unverified consent and support inquiry). Output explicitly reports `outbound_messages: 0`.
+or
 
-## Input contract and decisions
+```sh
+uv tool install git+https://github.com/prashobnair/zoho-implementation-toolkit@v0.1.0
+```
 
-`examples.json` contains `leads`, each with unique `id`, `channel` (`forms`, `whatsapp`, `instagram`), explicit international `phone`, `consent`, `intent` and `budget_confirmed`. The phone parser accepts punctuation around an E.164 number but never guesses a country code. It does not prove that the phone belongs to the same person: a match is only a duplicate *candidate*. An unsupported channel, invalid phone, no consent, support/unknown intent or unconfirmed budget goes to `human_queue`. Only an explicitly consented sales inquiry with confirmed budget reaches `sales_queue`. The status is a demo policy, not a CRM or legal consent rule.
+The old `python cli.py leads.json` is now:
 
-The result is a decision ledger, not an action queue being executed. No automated reply is sent even for a qualified lead. See `DESIGN.md` for the event boundary, test matrix and operational handoff.
+```sh
+zohokit lead-routing route leads.json [--default-region IN]
+```
 
-## Real integration boundary
+Note the hyphen: the command group is `lead-routing` while the module folder is `lead_routing`. Reports render with `--format json|table|markdown|html` and `--out`.
 
-A real implementation would need reviewed consent and retention rules, tenant-specific Bigin/CRM module metadata, documented API/webhook payloads, verified Meta channel permissions, signature checks, idempotency keys and retry/dead-letter behavior, rate limits, protected credentials, and an actual staffed human queue with service ownership. This repository deliberately invents a simple intermediate event schema rather than asserting vendor payload fidelity. Do not add client leads or real phone numbers to fixtures.
+## Links
+
+- Module guide: https://prashobnair.github.io/zoho-implementation-toolkit/modules/lead_routing/
+- What changed versus this repo: https://prashobnair.github.io/zoho-implementation-toolkit/legacy-parity/
+- Source: https://github.com/prashobnair/zoho-implementation-toolkit/tree/main/src/zohokit/modules/lead_routing
+
+This repository is archived and read-only.
